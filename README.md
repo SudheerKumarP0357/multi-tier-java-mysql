@@ -12,6 +12,9 @@
    # Install Java 17
    sudo apt install openjdk-17-jre-headless -y
 
+   # Install Maven
+   sudo apt install maven
+
    # Install net-tools
    sudo apt install net-tools -y
    ```
