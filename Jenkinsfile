@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Git Checkout') {
             steps {
-                sh 'git clone --branch main --single-branch https://github.com/SudheerKumarP0357/multi-tier-java-mysql.git'
+                git branch: 'main', url: 'https://github.com/SudheerKumarP0357/multi-tier-java-mysql.git'
             }
         }
 
