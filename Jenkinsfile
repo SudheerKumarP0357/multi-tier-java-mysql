@@ -21,7 +21,7 @@ pipeline {
         }
         stage('copy the jar file to home location') {
             steps {
-              sh 'cp target/*.jar /home/sudheerkumar/'
+              sh 'cp target/*.jar /home/sudheerkumarp0357'
             }
         }
       
