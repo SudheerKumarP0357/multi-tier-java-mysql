@@ -27,7 +27,7 @@ pipeline {
 
         stage('Run the application') {
             steps {
-                sh 'nohup java -jar bankapp-0.0.1-SNAPSHOT.jar --server.port=8081 > app.log 2>&1 &'
+                sh 'nohup java -jar /home/sudheerkumarp0357/bankapp-0.0.1-SNAPSHOT.jar --server.port=8081 > app.log 2>&1 &'
                 sh 'echo "Access the application: http://$(wget -qO- ifconfig.me):8081/login"'
             }
         }
