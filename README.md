@@ -1,5 +1,5 @@
 
-# Multi-Tier Java-MySQL Application
+# Multi-Tier Java-MySQL Application Demo
 
 ## 1. Create a Virtual Machine
 - Create a Virtual Machine with **Ubuntu LTS** version on your preferred cloud provider.
