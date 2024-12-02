@@ -19,10 +19,10 @@ pipeline {
               sh './mvnw clean package'
             }
         }
-        stage('copy the jar file to home location') {
-            steps {
-              sh 'cp target/*.jar /home/sudheerkumarp0357'
-            }
-        }      
+        // stage('copy the jar file to home location') {
+        //     steps {
+        //       sh 'cp target/*.jar /home/sudheerkumarp0357'
+        //     }
+        // }      
     }
 }
