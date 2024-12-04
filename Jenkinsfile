@@ -29,8 +29,8 @@ pipeline {
     }
 
     environment{
-        GIT_URL: 'https://github.com/SudheerKumarP0357/multi-tier-java-mysql.git'
-        GIT_BRANCH: 'develop'
+        GIT_URL= 'https://github.com/SudheerKumarP0357/multi-tier-java-mysql.git'
+        GIT_BRANCH= 'develop'
     }
 
     tools{
@@ -40,7 +40,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch:env.BRANCH_NAME, URL:evn.GIT_URL
+                git branch:env.GIT_BRANCH, url:env.GIT_URL
             }
         }
         stage('Build') {
@@ -48,7 +48,7 @@ pipeline {
                 script {
                     if (fileExists('pom.xml')) {
                         echo 'Executing Maven Build'
-                        sh "mvn clean install"
+                        sh "mvn clean package"
                     } else {
                         error 'No pom.xml file found in the repository!'
                     }
@@ -59,7 +59,7 @@ pipeline {
             parallel {
                 stage('Unit Tests') {
                     steps {
-                        sh "mvn test -Dtest=UnitTests"
+                        sh "mvn test"
                     }
                 }
                 stage('Integration Tests') {
@@ -70,9 +70,6 @@ pipeline {
             }
         }
         stage('Deploy') {
-            when {
-                expression { params.ENV == 'Prod' }
-            }
             steps {
                 echo "Deploying to ${params.ENV} environment."
                 echo "Deployment has been completed to ${params.ENV} environment."
@@ -81,25 +78,10 @@ pipeline {
     }
     post {
         always {
-            archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
+            sh 'cp target/*.jar /home/jenkins'
             cleanWs()
             echo 'Workspace cleaned and artifacts archived.'
-        }
-        success {
-            mail to: 'sudheerkumarp0357@gmail.com',
-                 subject: "Pipeline ${currentBuild.fullDisplayName} Succeeded",
-                 body: "Good job! The pipeline succeeded.\nBuild URL: ${env.BUILD_URL}"
-        }
-        failure {
-            mail to: 'sudheerkumarp0357@gmail.com',
-                 subject: "Pipeline ${currentBuild.fullDisplayName} Failed",
-                 body: "Oops! The pipeline failed.\nBuild URL: ${env.BUILD_URL}"
-        }
-        timeout {
-            mail to: 'sudheerkumarp0357@gmail.com',
-                 subject: "Pipeline ${currentBuild.fullDisplayName} Timed Out",
-                 body: "Pipeline timed out after 60 minutes.\nBuild URL: ${env.BUILD_URL}"
-        }
+        }        
     }
     
 }
